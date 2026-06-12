@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petfuture — Ultimate Business Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════
+   CSS 변수 — 여기만 수정하면 전체 변경
+══════════════════════════════════════════ */
+:root {
+  --bg-base:      #0F1410;
+  --bg-surface:   #1A2118;
+  --bg-elevated:  #232C21;
+  --bg-card:      #1E2820;
+
+  --text-primary: #E8E4DC;
+  --text-muted:   #8A9186;
+  --text-faint:   #4E5A4C;
+
+  --accent-green: #A8C5A0;
+  --accent-gold:  #D4B896;
+  --accent-red:   #C47A6A;
+
+  --border:       rgba(168,197,160,0.10);
+  --border-soft:  rgba(168,197,160,0.18);
+  --border-hover: rgba(168,197,160,0.28);
+
+  /* 폰트 — IBM Plex 패밀리: 시인성 최상 */
+  --font-serif:  'IBM Plex Serif', Georgia, serif;
+  --font-sans:   'IBM Plex Sans KR', -apple-system, sans-serif;
+  --font-mono:   'IBM Plex Mono', monospace;
+
+  --max-w: 1080px;
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+/* ══ 리셋 ══ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ══ 레이아웃 ══ */
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
+section { padding: 96px 0; border-top: 1px solid var(--border); }
+
+/* ══ 네비 ══ */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,20,16,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 40px;
+  height: 56px; display: flex; align-items: center; gap: 0;
+}
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 18px; font-weight: 300;
+  color: var(--text-primary);
+  margin-right: auto;
+  letter-spacing: 0.02em;
+}
+.nav-logo em { font-style: italic; color: var(--accent-green); }
+.nav-toc {
+  display: flex; gap: 0; list-style: none; overflow-x: auto;
+}
+.nav-toc a {
+  display: block;
+  padding: 0 14px; height: 56px; line-height: 56px;
+  font-size: 12px; font-weight: 400;
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: color 0.15s;
+  border-right: 1px solid var(--border);
+}
+.nav-toc a:hover { color: var(--accent-green); }
+
+/* ══ 히어로 ══ */
+#hero {
+  border-top: none;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 80px 0 60px;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-bg svg {
+  position: absolute; right: -40px; top: 0;
+  width: 55%; height: 100%; opacity: 0.12;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-green);
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before {
+  content: ''; display: block;
+  width: 28px; height: 1px; background: var(--accent-green);
+}
+h1.hero-h {
+  font-family: var(--font-serif);
+  font-size: clamp(44px, 6vw, 80px);
+  font-weight: 300; line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+h1.hero-h em { font-style: italic; color: var(--accent-gold); }
+.hero-phil {
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 300; font-style: italic;
+  color: var(--text-muted); margin-bottom: 36px;
+}
+.hero-desc {
+  font-size: 15px; color: var(--text-muted);
+  max-width: 500px; line-height: 1.85; margin-bottom: 48px;
+}
+
+/* 핵심 지표 그리드 */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px; background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden; margin-bottom: 0;
+}
+.kpi-item {
+  background: var(--bg-surface);
+  padding: 20px 18px;
+  transition: background 0.15s;
+}
+.kpi-item:hover { background: var(--bg-elevated); }
+.kpi-num {
+  font-family: var(--font-serif);
+  font-size: 26px; font-weight: 300;
+  color: var(--accent-gold); line-height: 1;
+  margin-bottom: 6px;
+}
+.kpi-label {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--text-faint);
+  letter-spacing: 0.06em; line-height: 1.4;
+}
+
+/* ══ 섹션 공통 ══ */
+.sec-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-green); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-eyebrow span {
+  display: inline-block;
+  width: 18px; height: 1px; background: var(--accent-green);
+}
+h2.sec-h {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 300; line-height: 1.25;
+  letter-spacing: -0.01em; margin-bottom: 16px;
+}
+h2.sec-h em { font-style: italic; color: var(--accent-gold); }
+.sec-desc {
+  font-size: 15px; color: var(--text-muted);
+  max-width: 540px; line-height: 1.85; margin-bottom: 52px;
+}
+
+/* ══ 01 — 핵심 명제 ══ */
+.proposition-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  background: var(--border); border-radius: var(--radius-lg); overflow: hidden;
+  margin-bottom: 48px;
+}
+.prop-card {
+  background: var(--bg-surface); padding: 36px 32px;
+  transition: background 0.15s;
+}
+.prop-card:hover { background: var(--bg-elevated); }
+.prop-card h3 {
+  font-family: var(--font-serif);
+  font-size: 18px; font-weight: 400;
+  color: var(--text-primary); margin-bottom: 12px;
+}
+.prop-card p { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+.prop-card.highlight { background: var(--bg-elevated); border-left: 2px solid var(--accent-green); }
+
+.loss-tags {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;
+}
+.loss-tag {
+  padding: 10px 18px;
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: 40px;
+  font-size: 13px; color: var(--text-muted);
+  display: flex; align-items: center; gap: 8px;
+  transition: border-color 0.15s;
+}
+.loss-tag:hover { border-color: var(--border-hover); color: var(--text-primary); }
+
+/* 기존 vs 신규 비교 */
+.compare-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.compare-card {
+  padding: 28px; border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+.compare-card.old-way { background: var(--bg-surface); opacity: 0.7; }
+.compare-card.new-way { background: var(--bg-elevated); border-color: var(--accent-green); }
+.compare-card h4 {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.compare-card.old-way h4 { color: var(--text-faint); }
+.compare-card.new-way h4 { color: var(--accent-green); }
+.compare-card p { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+/* ══ ★ 신규: 시한부 선고 섹션 ══ */
+#timing { background: var(--bg-base); }
+.timing-banner {
+  padding: 28px 32px; margin-bottom: 56px;
+  background: var(--bg-surface);
+  border: 1px solid rgba(212,184,150,0.25);
+  border-left: 3px solid var(--accent-gold);
+  border-radius: var(--radius);
+}
+.timing-banner-label {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent-gold); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.timing-banner p {
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 300; font-style: italic;
+  color: var(--text-primary); line-height: 1.6;
+}
+
+.timeline {
+  position: relative; padding-left: 28px;
+  border-left: 1px solid var(--border-soft);
+}
+.tl-item {
+  position: relative; padding: 0 0 52px 32px;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -21px; top: 6px;
+  width: 10px; height: 10px; border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--bg-base);
+}
+.tl-dot.gold { background: var(--accent-gold); }
+.tl-dot.green { background: var(--accent-green); }
+.tl-dot.muted { background: var(--text-faint); }
+.tl-phase {
+  font-family: var(--font-mono); font-size: 11px;
+  font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.tl-phase.gold { color: var(--accent-gold); }
+.tl-phase.green { color: var(--accent-green); }
+.tl-phase.muted { color: var(--text-faint); }
+.tl-item h3 {
+  font-family: var(--font-serif); font-size: 20px;
+  font-weight: 400; color: var(--text-primary); margin-bottom: 10px;
+}
+.tl-item p { font-size: 14px; color: var(--text-muted); line-height: 1.8; max-width: 580px; }
+
+.hospital-box {
+  margin-top: 56px; padding: 28px 32px;
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+}
+.hospital-box-icon { font-size: 32px; line-height: 1; }
+.hospital-box-label {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent-gold); letter-spacing: 0.08em; margin-bottom: 4px;
+}
+.hospital-box p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+.hospital-box-btn {
+  white-space: nowrap;
+  background: var(--accent-gold); color: var(--bg-base);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  padding: 10px 20px; border-radius: var(--radius);
+  transition: opacity 0.15s;
+}
+.hospital-box-btn:hover { opacity: 0.85; }
+
+/* ══ 02 — 돌봄 시스템 ══ */
+.care-table-wrap { overflow-x: auto; margin-bottom: 36px; }
+table.care-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13px;
+}
+.care-table th {
+  font-family: var(--font-mono); font-size: 10px;
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-faint); padding: 10px 14px;
+  border-bottom: 1px solid var(--border-soft);
+  text-align: left; white-space: nowrap;
+}
+.care-table td {
+  padding: 13px 14px; color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.55; vertical-align: top;
+}
+.care-table tr:hover td { background: var(--bg-surface); color: var(--text-primary); }
+.care-table td:first-child { color: var(--text-primary); white-space: nowrap; }
+.care-table td.revenue { color: var(--accent-green); font-size: 12px; }
+
+.zero-principle {
+  padding: 24px 28px;
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  font-family: var(--font-serif); font-size: 16px;
+  font-style: italic; color: var(--text-muted); line-height: 1.7;
+}
+.zero-principle strong { color: var(--accent-green); font-style: normal; font-weight: 400; }
+
+/* ══ 03 — 감정 설계 ══ */
+.emotion-loop {
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto; padding: 32px 0; margin-bottom: 48px;
+}
+.emotion-step {
+  flex-shrink: 0; text-align: center;
+  padding: 0 20px; min-width: 110px;
+}
+.emotion-icon { font-size: 24px; margin-bottom: 10px; line-height: 1; }
+.emotion-label {
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+}
+.emotion-label strong {
+  display: block; font-size: 13px; font-weight: 500;
+  color: var(--text-primary); margin-bottom: 2px;
+}
+.emotion-arrow {
+  font-family: var(--font-mono); font-size: 16px;
+  color: var(--text-faint); flex-shrink: 0; padding: 0 4px;
+}
+
+.persona-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.persona-card {
+  padding: 28px 24px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+  transition: border-color 0.15s;
+}
+.persona-card:hover { border-color: var(--border-hover); }
+.persona-card h3 {
+  font-family: var(--font-serif); font-size: 17px;
+  font-weight: 400; color: var(--text-primary); margin-bottom: 10px;
+}
+.persona-card p { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+
+/* ══ 04 — 리텐션 ══ */
+.retention-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-bottom: 48px;
+}
+.retention-card {
+  padding: 32px 26px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.retention-tag {
+  font-family: var(--font-mono); font-size: 10px;
+  font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent-green); margin-bottom: 14px;
+  display: inline-block;
+}
+.retention-card h3 {
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 400; color: var(--text-primary); margin-bottom: 12px;
+  line-height: 1.3;
+}
+.retention-card p { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+.retention-card .highlight-line {
+  font-size: 13px; color: var(--accent-gold);
+  margin: 12px 0 0; padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ══ 05 — 수익화 ══ */
+.plan-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 48px;
+}
+.plan-card {
+  background: var(--bg-surface); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 28px 22px;
+  position: relative; transition: border-color 0.15s, transform 0.15s;
+}
+.plan-card:hover { transform: translateY(-2px); border-color: var(--border-hover); }
+.plan-card.featured {
+  border-color: var(--accent-green); background: var(--bg-elevated);
+}
+.plan-badge {
+  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  background: var(--accent-green); color: var(--bg-base);
+  font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+  padding: 3px 12px; border-radius: 20px; white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+.plan-name {
+  font-family: var(--font-serif); font-size: 18px; font-weight: 300;
+  color: var(--text-primary); margin-bottom: 4px;
+}
+.plan-target { font-size: 12px; color: var(--text-faint); margin-bottom: 20px; }
+.plan-price {
+  font-family: var(--font-serif); font-size: 34px; font-weight: 300;
+  color: var(--text-primary); line-height: 1; margin-bottom: 4px;
+}
+.plan-price sup { font-size: 15px; vertical-align: super; }
+.plan-price sub { font-size: 14px; color: var(--text-muted); font-family: var(--font-sans); }
+.plan-divider { height: 1px; background: var(--border); margin: 18px 0; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.plan-features li {
+  font-size: 12px; color: var(--text-muted);
+  display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+}
+.plan-features li::before { content: '·'; color: var(--accent-green); flex-shrink: 0; }
+.plan-features li.off { opacity: 0.35; }
+.plan-features li.off::before { content: '–'; color: var(--text-faint); }
+
+.revenue-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.rev-card {
+  padding: 24px 20px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.rev-card h4 {
+  font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px;
+}
+.rev-card p { font-size: 12px; color: var(--text-muted); line-height: 1.7; margin-bottom: 10px; }
+.rev-price {
+  font-family: var(--font-mono); font-size: 13px;
+  color: var(--accent-green);
+}
+
+/* ══ 06 — 손익 ══ */
+.unit-metrics {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  margin-bottom: 40px;
+}
+.metric-box {
+  padding: 20px 16px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.metric-num {
+  font-family: var(--font-serif); font-size: 26px; font-weight: 300;
+  color: var(--accent-gold); line-height: 1; margin-bottom: 6px;
+}
+.metric-label { font-size: 11px; color: var(--text-faint); line-height: 1.5; }
+
+.pnl-table-wrap { overflow-x: auto; margin-bottom: 40px; }
+table.pnl-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.pnl-table th {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--text-faint); padding: 10px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  text-align: right;
+}
+.pnl-table th:first-child { text-align: left; }
+.pnl-table td {
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums;
+}
+.pnl-table td:first-child { text-align: left; color: var(--text-primary); }
+.pnl-table tr.subtotal td { color: var(--accent-red); font-size: 12px; }
+.pnl-table tr.total td {
+  color: var(--accent-green); font-weight: 500;
+  font-family: var(--font-serif); font-size: 15px;
+  border-top: 1px solid var(--border-soft);
+}
+.pnl-table tr:hover td { background: var(--bg-surface); }
+
+.scenario-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.scenario-card {
+  padding: 24px 20px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.scenario-icon { font-size: 22px; margin-bottom: 10px; }
+.scenario-name {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-faint); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.scenario-rev {
+  font-family: var(--font-serif); font-size: 24px; font-weight: 300;
+  color: var(--text-primary); margin-bottom: 12px;
+}
+.scenario-card ul {
+  list-style: none; display: flex; flex-direction: column; gap: 5px;
+}
+.scenario-card ul li { font-size: 12px; color: var(--text-muted); }
+.scenario-card ul li::before { content: '· '; color: var(--text-faint); }
+
+/* ══ 07 — 로드맵 ══ */
+.roadmap-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+}
+.phase-card {
+  padding: 28px 22px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.phase-tag {
+  font-family: var(--font-mono); font-size: 10px;
+  font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent-green); margin-bottom: 6px;
+}
+.phase-card h3 {
+  font-family: var(--font-serif); font-size: 16px; font-weight: 400;
+  color: var(--text-primary); margin-bottom: 12px; line-height: 1.35;
+}
+.phase-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.phase-card ul li { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+.phase-card ul li::before { content: '→ '; color: var(--text-faint); }
+.phase-card .phase-kpi {
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent-gold);
+}
+
+/* ══ 08 — 일본 ══ */
+.japan-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: start; margin-bottom: 48px;
+}
+.japan-reasons {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.japan-reason {
+  padding: 16px 18px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+  font-size: 13px; color: var(--text-muted); line-height: 1.6;
+}
+.japan-reason strong { display: block; font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px; }
+
+.japan-strategy {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.strat-item {
+  padding: 20px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.strat-item h4 {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent-green); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.strat-item p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+/* ══ 09 — 기술 스택 ══ */
+.stack-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-bottom: 40px;
+}
+.stack-group {
+  padding: 24px 20px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.stack-group h4 {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent-green); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.stack-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.stack-tag {
+  padding: 4px 10px; background: var(--bg-elevated);
+  border: 1px solid var(--border); border-radius: 4px;
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+}
+
+.principle-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.principle-item {
+  padding: 24px; background: var(--bg-surface);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.principle-item h4 {
+  font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 10px;
+}
+.principle-item ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.principle-item ul li { font-size: 13px; color: var(--text-muted); }
+.principle-item ul li::before { content: '· '; color: var(--accent-green); }
+
+/* ══ 클로징 ══ */
+#closing {
+  border-top: 1px solid var(--border);
+  padding: 120px 0 80px;
+  text-align: center;
+}
+.closing-h {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 5vw, 62px);
+  font-weight: 300; line-height: 1.2;
+  color: var(--text-primary); margin-bottom: 12px;
+}
+.closing-h em { font-style: italic; color: var(--accent-gold); }
+.closing-sub {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 18px; color: var(--text-muted); margin-bottom: 56px;
+}
+.closing-metrics {
+  display: flex; justify-content: center; gap: 0;
+  border: 1px solid var(--border-soft); border-radius: var(--radius-lg);
+  overflow: hidden; max-width: 720px; margin: 0 auto 48px;
+}
+.cm-item {
+  flex: 1; padding: 24px 16px;
+  background: var(--bg-surface); border-right: 1px solid var(--border);
+  text-align: center; transition: background 0.15s;
+}
+.cm-item:last-child { border-right: none; }
+.cm-item:hover { background: var(--bg-elevated); }
+.cm-num {
+  font-family: var(--font-serif); font-size: 24px; font-weight: 300;
+  color: var(--accent-gold); display: block; margin-bottom: 4px;
+}
+.cm-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); letter-spacing: 0.06em; }
+.closing-note {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-faint); letter-spacing: 0.06em;
+}
+
+/* ══ 푸터 ══ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+}
+.footer-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-logo { font-family: var(--font-serif); font-size: 16px; font-weight: 300; color: var(--text-faint); }
+.footer-logo em { font-style: italic; color: var(--accent-green); }
+.footer-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); letter-spacing: 0.05em; }
+
+/* ══ 반응형 ══ */
+@media (max-width: 900px) {
+  .wrap { padding: 0 24px; }
+  .nav-inner { padding: 0 24px; }
+  section { padding: 64px 0; }
+  .kpi-row { grid-template-columns: repeat(3, 1fr); }
+  .proposition-grid { grid-template-columns: 1fr; }
+  .compare-row { grid-template-columns: 1fr; }
+  .persona-grid { grid-template-columns: 1fr; }
+  .retention-grid { grid-template-columns: 1fr; }
+  .plan-grid { grid-template-columns: 1fr 1fr; }
+  .revenue-grid { grid-template-columns: 1fr; }
+  .unit-metrics { grid-template-columns: repeat(3, 1fr); }
+  .roadmap-grid { grid-template-columns: 1fr 1fr; }
+  .japan-header { grid-template-columns: 1fr; gap: 32px; }
+  .japan-reasons { grid-template-columns: 1fr; }
+  .japan-strategy { grid-template-columns: 1fr; }
+  .stack-grid { grid-template-columns: 1fr 1fr; }
+  .principle-grid { grid-template-columns: 1fr; }
+  .closing-metrics { flex-direction: column; }
+  .hospital-box { grid-template-columns: auto 1fr; }
+  .hospital-box-btn { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .kpi-row { grid-template-columns: 1fr 1fr; }
+  .plan-grid { grid-template-columns: 1fr; }
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .stack-grid { grid-template-columns: 1fr; }
+  .scenario-grid { grid-template-columns: 1fr; }
+  .unit-metrics { grid-template-columns: 1fr 1fr; }
+  .emotion-loop { gap: 0; }
+  .nav-toc { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ 네비게이션 ═══ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Pet<em>future</em></div>
+    <ul class="nav-toc">
+      <li><a href="#proposition">핵심 명제</a></li>
+      <li><a href="#timing">시작 시점</a></li>
+      <li><a href="#care">돌봄 시스템</a></li>
+      <li><a href="#emotion">감정 설계</a></li>
+      <li><a href="#retention">리텐션</a></li>
+      <li><a href="#revenue">수익화</a></li>
+      <li><a href="#pnl">손익</a></li>
+      <li><a href="#roadmap">로드맵</a></li>
+      <li><a href="#japan">일본</a></li>
+      <li><a href="#tech">기술</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ═══ 히어로 ═══ -->
+<section id="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <line x1="0" y1="680" x2="800" y2="680" stroke="#A8C5A0" stroke-width="0.8" opacity="0.4"/>
+      <polyline points="0,680 80,615 170,650 260,582 360,622 440,558 520,598 610,542 700,585 800,540 800,680" fill="#1A2118"/>
+      <line x1="400" y1="685" x2="318" y2="498" stroke="#A8C5A0" stroke-width="0.6" opacity="0.45"/>
+      <line x1="400" y1="685" x2="482" y2="498" stroke="#A8C5A0" stroke-width="0.6" opacity="0.45"/>
+      <circle cx="400" cy="478" r="22" fill="none" stroke="#D4B896" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="400" cy="478" r="10" fill="none" stroke="#D4B896" stroke-width="0.4" opacity="0.45"/>
+      <circle cx="400" cy="478" r="3"  fill="#D4B896" opacity="0.65"/>
+      <line x1="400" y1="478" x2="400" y2="415" stroke="#D4B896" stroke-width="0.4" opacity="0.3"/>
+      <line x1="400" y1="478" x2="340" y2="428" stroke="#D4B896" stroke-width="0.35" opacity="0.22"/>
+      <line x1="400" y1="478" x2="460" y2="428" stroke="#D4B896" stroke-width="0.35" opacity="0.22"/>
+      <ellipse cx="392" cy="662" rx="4" ry="2.5" fill="#A8C5A0" opacity="0.48" transform="rotate(-8,392,662)"/>
+      <ellipse cx="408" cy="650" rx="4" ry="2.5" fill="#A8C5A0" opacity="0.48" transform="rotate(8,408,650)"/>
+      <ellipse cx="394" cy="638" rx="3.5" ry="2"  fill="#A8C5A0" opacity="0.4"  transform="rotate(-5,394,638)"/>
+      <ellipse cx="407" cy="627" rx="3.5" ry="2"  fill="#A8C5A0" opacity="0.38" transform="rotate(5,407,627)"/>
+      <ellipse cx="396" cy="616" rx="3"   ry="1.8" fill="#A8C5A0" opacity="0.32" transform="rotate(-4,396,616)"/>
+      <ellipse cx="405" cy="607" rx="3"   ry="1.8" fill="#A8C5A0" opacity="0.28" transform="rotate(4,405,607)"/>
+      <ellipse cx="398" cy="598" rx="2.5" ry="1.5" fill="#A8C5A0" opacity="0.22"/>
+      <ellipse cx="404" cy="591" rx="2.5" ry="1.5" fill="#A8C5A0" opacity="0.18"/>
+      <g transform="translate(383,572) scale(0.9)" fill="#A8C5A0" opacity="0.5">
+        <ellipse cx="18" cy="0" rx="16" ry="9"/>
+        <circle cx="34" cy="-8" r="7"/>
+        <ellipse cx="32" cy="-15" rx="3" ry="5" transform="rotate(-15,32,-15)"/>
+        <path d="M2,0 Q-8,-12 -6,-18" stroke="#A8C5A0" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <line x1="28" y1="7"  x2="24" y2="20" stroke="#A8C5A0" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="20" y1="8"  x2="28" y2="20" stroke="#A8C5A0" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="6"  y1="7"  x2="2"  y2="20" stroke="#A8C5A0" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="0"  y1="6"  x2="8"  y2="20" stroke="#A8C5A0" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <circle cx="180" cy="120" r="1.2" fill="#D4B896" opacity="0.65"/>
+      <circle cx="560" cy="75"  r="1.5" fill="#D4B896" opacity="0.75"/>
+      <circle cx="670" cy="145" r="1"   fill="#A8C5A0" opacity="0.55"/>
+      <circle cx="110" cy="195" r="0.9" fill="#D4B896" opacity="0.5"/>
+      <circle cx="710" cy="210" r="1.2" fill="#A8C5A0" opacity="0.45"/>
+      <circle cx="310" cy="95"  r="0.8" fill="#D4B896" opacity="0.48"/>
+      <circle cx="450" cy="155" r="1"   fill="#A8C5A0" opacity="0.42"/>
+      <circle cx="760" cy="95"  r="0.8" fill="#D4B896" opacity="0.45"/>
+    </svg>
+  </div>
+
+  <div class="wrap">
+    <div style="max-width: 620px; position: relative;">
+      <div class="hero-eyebrow">Ultimate Business Model · 2026</div>
+      <h1 class="hero-h">Pet<em>future</em></h1>
+      <p class="hero-phil">서서히, 자연스럽게 — 잊혀지게</p>
+      <p class="hero-desc">
+        영원히 기억하는 서비스가 아니다.<br>
+        언젠가 새로운 반려동물이 그 자리를 채워줄 때까지 —<br>
+        <strong style="color: var(--text-primary); font-weight: 500;">빨리 잊고 일상에 적응하기 위한 수단.</strong><br>
+        그게 Petfuture의 존재 이유다.
+      </p>
+
+      <div class="kpi-row">
+        <div class="kpi-item">
+          <div class="kpi-num">552만</div>
+          <div class="kpi-label">국내 반려동물<br>양육 가구</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-num">15조</div>
+          <div class="kpi-label">2027년<br>펫 시장 전망</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-num">0</div>
+          <div class="kpi-label">전 세계<br>직접 경쟁사</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-num">41x</div>
+          <div class="kpi-label">목표<br>LTV / CAC</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-num">KR→JP</div>
+          <div class="kpi-label">M18+<br>확장 로드맵</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 01 — 핵심 명제 ═══ -->
+<section id="proposition">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>핵심 명제 · 01</div>
+    <h2 class="sec-h">"영원히 기억"이 아니라<br><em>"서서히 잊혀지게"</em></h2>
+    <p class="sec-desc">
+      기존 추모 서비스는 슬픔을 붙잡는다. Petfuture는 다르다.
+      서서히, 자연스럽게 잊혀지도록 — 새로운 반려동물이 그 자리를 채울 때까지
+      일상을 유지하며 부드럽게 통과하도록 돕는 것이 Petfuture의 전부다.
+    </p>
+
+    <div class="loss-tags">
+      <div class="loss-tag">🕯️ 공허감 — 돌봄 루틴이 사라진 공백</div>
+      <div class="loss-tag">💭 그리움 — 살아있던 존재의 기억</div>
+      <div class="loss-tag">💔 펫로스 — 공식 인정된 심리적 외상</div>
+      <div class="loss-tag">🌿 의식의 재건 — 행동으로 슬픔을 처리</div>
+      <div class="loss-tag">∞ Continuing Bonds — 끊어지지 않는 연결</div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-card old-way">
+        <h4>기존 추모 서비스 — "영원히 기억"</h4>
+        <p>슬픔을 붙잡는 구조다. 유골함, 사진 앨범, 단순 디지털 추모 페이지는 모두 수동적 관람이다. 견주의 역할이 사라지고, 시간이 지날수록 접속할 이유가 없어진다. 이별을 영구화한다.</p>
+      </div>
+      <div class="compare-card new-way">
+        <h4>Petfuture — "서서히 잊혀지게"</h4>
+        <p>슬픔을 자연스럽게 통과시키는 구조다. 매일 돌보는 행동이 루틴을 유지하고, 평균 3~4년 후 자연스러운 애도 완성. "더 이상 필요 없어졌다" — 이탈이 곧 서비스의 목적 달성이다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ ★ 시한부 선고 — 핵심 인사이트 ═══ -->
+<section id="timing">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>시작 시점 · ★ 핵심 인사이트</div>
+    <h2 class="sec-h">사후가 아니라<br><em>지금 이 순간</em>이 적기</h2>
+
+    <div class="timing-banner">
+      <div class="timing-banner-label">창업자 인사이트</div>
+      <p>
+        "시한부 선고를 받은 순간, 루틴이 무너지기 시작한다. 산책을 못 가고, 밥도 잘 못 먹는 그 시점부터 — 사후가 아니라 그때부터 시작해야 한다."
+      </p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot gold"></div>
+        <div class="tl-phase gold">시한부 선고 직후</div>
+        <h3>지금 사진을 올리고, 캐릭터를 만드세요</h3>
+        <p>아직 살아있는 아이의 사진이 가장 많고 품질도 좋을 때다. 24시간 안에 AI 캐릭터가 완성된다. "우리 애 맞아" — 그 반응을 생전에 먼저 경험하게 된다. 캐릭터 품질이 올라가고, 가입 심리 허들이 낮아지는 이중 효과.</p>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-phase green">루틴이 무너지는 시점</div>
+        <h3>디지털 공간에서 루틴을 이어가세요</h3>
+        <p>산책을 못 가는 날, 밥을 잘 못 먹는 날. 현실에서 할 수 없게 된 돌봄을 디지털 캐릭터에게 이어준다. 손이 기억하는 루틴이 유지되고, 일상의 무너짐이 완화된다. 이것이 Petfuture가 "사후 서비스"가 아닌 이유다.</p>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot muted"></div>
+        <div class="tl-phase muted">이별의 순간</div>
+        <h3>충격이 아니라, 연속으로 느껴집니다</h3>
+        <p>이미 익숙해진 캐릭터가 곁에 있기 때문에 갑작스러운 공백이 아니다. 오늘도 밥을 주고, 오늘도 쓰다듬어 주는 것이 자연스럽게 이어진다. 이탈률이 사후 가입 대비 현저히 낮아지는 구조적 이유이기도 하다.</p>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-phase green">3~4년 후</div>
+        <h3>"더 이상 필요 없어졌다" — 그게 성공입니다</h3>
+        <p>자연스러운 애도가 완성되고, 새로운 일상이 자리를 채운다. Petfuture를 떠나는 것이 슬픔이 아니라 회복의 증거다. 이 구조가 경쟁사의 "영원히 기억" 모델과 근본적으로 다른 점이다.</p>
+      </div>
+    </div>
+
+    <div class="hospital-box">
+      <div class="hospital-box-icon">🏥</div>
+      <div>
+        <div class="hospital-box-label">동물병원 B2B — 핵심 접점</div>
+        <p>수의사가 "6개월 예후"를 얘기하는 그 순간이 Petfuture 가입의 최적 접점이다. 기존 "장례업체 연계"에서 "치료 중 병원 연계"로 B2B 전략 전환. 병원당 월 3만원 + 전환 수수료 15%. 100개 병원 = 월 300만원.</p>
+      </div>
+      <div class="hospital-box-btn">B2B 전략 상세 →</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 02 — 돌봄 시스템 ═══ -->
+<section id="care">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>돌봄 시스템 · 02</div>
+    <h2 class="sec-h">현실 돌봄의<br><em>완전한 재현</em></h2>
+    <p class="sec-desc">현실에서 했던 모든 행동이 디지털에서 1:1로 살아있다. 버튼 클릭이 아니라 실제 밥그릇에 사료를 담는 제스처로 구현된다.</p>
+
+    <div class="care-table-wrap">
+      <table class="care-table">
+        <thead>
+          <tr>
+            <th>현실 행동</th>
+            <th>디지털 액션</th>
+            <th>캐릭터 반응</th>
+            <th>상태 변화</th>
+            <th>감정 해소</th>
+            <th>수익 연결</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>🍚 밥 주기</td><td>밥그릇 탭 → 담기 애니메이션</td><td>달려와 먹는 모션 + 소리</td><td>배고픔↑ 기분↑</td><td>양육 본능 충족</td><td class="revenue">프리미엄 사료 아이템</td></tr>
+          <tr><td>💧 물 갈기</td><td>물그릇 탭 → 따르는 소리</td><td>다가와 마시는 모션</td><td>수분↑</td><td>세심한 돌봄 지속</td><td class="revenue">—</td></tr>
+          <tr><td>🤍 쓰다듬기</td><td>캐릭터 터치 / 클릭</td><td>눈 감고 골골 + 진동 피드백</td><td>친밀도↑↑ 기분↑</td><td>스킨십 그리움 해소</td><td class="revenue">AI 반응 프리미엄</td></tr>
+          <tr><td>🌿 산책</td><td>산책 버튼 → 타이머</td><td>맵 확장 · 새 장소 발견</td><td>활동↑ 장소 해금</td><td>함께한 루틴 재현</td><td class="revenue">맵 확장팩</td></tr>
+          <tr><td>🧹 화장실</td><td>하루 1회 청소 버튼</td><td>공간이 깨끗해지는 연출</td><td>청결도↑ 스트리크+1</td><td>책임감 완성</td><td class="revenue">—</td></tr>
+          <tr><td>🎾 장난감</td><td>아이템 드래그 → 반응</td><td>뛰고 달리는 활발한 모션</td><td>에너지↑ 행복↑↑</td><td>같이 놀던 기억</td><td class="revenue">장난감 아이템샵</td></tr>
+          <tr><td>💌 말 걸기</td><td>텍스트 / 음성 입력</td><td>AI 성격 학습 기반 반응</td><td>감정 일기 자동 기록</td><td>대화 그리움 해소</td><td class="revenue">AI 대화 프리미엄</td></tr>
+          <tr><td>📸 사진 찍기</td><td>스냅샷 버튼</td><td>포즈 취하는 특별 모션</td><td>추억 앨범 적재</td><td>기억 보존 욕구</td><td class="revenue">포토북 인쇄 주문</td></tr>
+          <tr><td>🎂 생일 챙기기</td><td>생일 이벤트 자동 발동</td><td>케이크 · 가족 초대 특별 연출</td><td>기억 앨범 + 기념 카드</td><td>기념일 의식 재건</td><td class="revenue">생일 케이크 아이템</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="zero-principle">
+      <strong>이질감 제로 원칙</strong> — 액션의 이름, 순서, 피드백이 현실과 동일해야 한다. 손가락이 기억하는 행동이 살아있을 때, 견주는 이별을 인식하지 않는다.
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 03 — 감정 설계 ═══ -->
+<section id="emotion">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>감정 설계 · 03</div>
+    <h2 class="sec-h">이별을 느끼지 못하게 하는<br><em>감정 루프</em></h2>
+    <p class="sec-desc">견주의 감정 여정을 설계한다. 슬픔이 자연스럽게 돌봄으로 전환되는 구조.</p>
+
+    <div class="emotion-loop">
+      <div class="emotion-step">
+        <div class="emotion-icon">😢</div>
+        <div class="emotion-label"><strong>그리움 발생</strong>불현듯 떠오르는 순간</div>
+      </div>
+      <div class="emotion-arrow">→</div>
+      <div class="emotion-step">
+        <div class="emotion-icon">📱</div>
+        <div class="emotion-label"><strong>앱 접속</strong>반사적 행동</div>
+      </div>
+      <div class="emotion-arrow">→</div>
+      <div class="emotion-step">
+        <div class="emotion-icon">🍚</div>
+        <div class="emotion-label"><strong>돌봄 행동</strong>밥·물·산책·쓰다듬기</div>
+      </div>
+      <div class="emotion-arrow">→</div>
+      <div class="emotion-step">
+        <div class="emotion-icon">💛</div>
+        <div class="emotion-label"><strong>캐릭터 반응</strong>살아있는 피드백</div>
+      </div>
+      <div class="emotion-arrow">→</div>
+      <div class="emotion-step">
+        <div class="emotion-icon">🌿</div>
+        <div class="emotion-label"><strong>위안 & 해소</strong>슬픔이 행동으로 처리됨</div>
+      </div>
+      <div class="emotion-arrow">→</div>
+      <div class="emotion-step">
+        <div class="emotion-icon">🔁</div>
+        <div class="emotion-label"><strong>내일도 온다</strong>루틴이 재건됨</div>
+      </div>
+    </div>
+
+    <div class="persona-grid">
+      <div class="persona-card">
+        <h3>👩 1인가구 견주</h3>
+        <p>유일한 가족을 잃은 1인가구에게 아침 밥 주기 루틴은 하루를 시작하는 이유가 된다. 스트리크가 쌓일수록 일상이 회복되는 구조. 심리적 안전망이 되는 서비스.</p>
+      </div>
+      <div class="persona-card">
+        <h3>👨‍👩‍👧 어린 자녀 있는 가정</h3>
+        <p>아이에게 죽음을 설명하는 대신 "하늘 나라에서도 우리가 밥 줄 수 있어". 가족이 함께 접속해 각자 돌봄 행동을 하면, 아이의 첫 이별 경험이 트라우마가 아닌 의식(ritual)이 된다.</p>
+      </div>
+      <div class="persona-card">
+        <h3>🏙️ 멀리 사는 가족</h3>
+        <p>Family 플랜으로 부모와 성인 자녀가 각자의 도시에서 같은 공간에 접속해 함께 돌본다. "오늘 엄마가 나비 밥 줬어" — 새로운 가족 연결 방식이 생긴다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 04 — 리텐션 ═══ -->
+<section id="retention">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>리텐션 엔진 · 04</div>
+    <h2 class="sec-h">해지 버튼을 누를 수 없는<br><em>구조적 설계</em></h2>
+    <p class="sec-desc">감정이 이탈 방어막이 된다. 돌봄 행동이 쌓일수록 떠나기 어려워지는 3중 잠금 구조.</p>
+
+    <div class="retention-grid">
+      <div class="retention-card">
+        <div class="retention-tag">Lock 1 · Daily</div>
+        <h3>오늘 안 오면<br>나비가 쓸쓸해진다</h3>
+        <p>밥·물 게이지가 시간 경과에 따라 감소한다. 24시간 미접속 시 캐릭터가 기운 없는 모션으로 변환. 스트리크 숫자 = 끊기 아까운 심리적 자산.</p>
+        <div class="highlight-line">→ 7일 연속 달성 시 특별 애니메이션 이벤트</div>
+      </div>
+      <div class="retention-card">
+        <div class="retention-tag">Lock 2 · Weekly</div>
+        <h3>매주 새로운 기억이<br>만들어진다</h3>
+        <p>기념일 이미지 카드 자동 생성 + BGM. 계절 이벤트 (봄꽃, 첫눈, 여름 바다). 새 산책 장소 해금 (공원 → 한강 → 바다). 공유를 통한 신규 유저 유입.</p>
+        <div class="highlight-line">→ "이번 주 나비와의 7일" 자동 생성</div>
+      </div>
+      <div class="retention-card">
+        <div class="retention-tag">Lock 3 · 함께한 날들</div>
+        <h3>생년월일부터 카운트,<br>절대 리셋 없음</h3>
+        <p>가입일이 아닌 생년월일 기준으로 이미 수천 일부터 시작. 해지 = 이 숫자를 버리는 것. 1,000·2,000·3,000일 도달 시 자동 기념 이벤트.</p>
+        <div class="highlight-line">→ 해지 = 수천 일의 기억을 포기하는 행위</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 05 — 수익화 ═══ -->
+<section id="revenue">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>수익화 극대화 · 05</div>
+    <h2 class="sec-h">돌봄 행동이 만드는<br><em>자연스러운 수익 구조</em></h2>
+    <p class="sec-desc">강매 없이 — 감정이 지갑을 열게 하는 설계. 구독 + 인앱 + B2B의 3중 수익 구조.</p>
+
+    <div class="plan-grid" style="grid-template-columns: repeat(3, 1fr);">
+
+      <div class="plan-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-target">바이럴 유입 채널</div>
+        <div class="plan-price"><sup>₩</sup>0<sub>/월</sub></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>2D 캐릭터 1마리</li>
+          <li>기본 돌봄 3가지</li>
+          <li>14일 무료 체험</li>
+          <li class="off">영구 보관</li>
+          <li class="off">돌봄 전체 9가지</li>
+          <li class="off">가족 공유</li>
+        </ul>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-name">Lite</div>
+        <div class="plan-target">나 혼자, 조용히</div>
+        <div class="plan-price"><sup>₩</sup>8,900<sub>/월</sub></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>2D 캐릭터 1마리 영구 보관</li>
+          <li>돌봄 액션 9가지 전체</li>
+          <li>함께한 날들 카운터</li>
+          <li>기일 · 생일 알림 + 스트리크</li>
+          <li>추억 갤러리</li>
+          <li>AI 한 줄 편지 (매일, Gemini)</li>
+          <li class="off">가족 공유</li>
+        </ul>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="plan-badge">★ 핵심 수익</div>
+        <div class="plan-name">Family</div>
+        <div class="plan-target">가족과 함께, 어디서든</div>
+        <div class="plan-price"><sup>₩</sup>16,900<sub>/월</sub></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Lite 전체 포함</li>
+          <li>캐릭터 최대 3마리</li>
+          <li>가족 공유 최대 5인</li>
+          <li>공동 돌봄 기여도 표시</li>
+          <li>캐릭터 스킨 · 의상 변경</li>
+          <li>기일 가족 추모 이벤트</li>
+          <li>기념일 이미지 카드 자동 생성</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="revenue-grid">
+      <div class="rev-card">
+        <h4>🎁 인앱 아이템샵</h4>
+        <p>프리미엄 사료, 장난감, 의상, 생일 케이크, 특별 장소. "나비 생일에 뭔가 해주고 싶다"는 감정에서 나오는 자연스러운 지출. 월 평균 2~3회 예상.</p>
+        <div class="rev-price">990 ~ 3,900원 / 건</div>
+      </div>
+      <div class="rev-card">
+        <h4>📔 연간 포토북</h4>
+        <p>365일의 돌봄 기록 + AI 생성 캐릭터 일러스트를 고급 인쇄 포토북으로. 기일에 맞춰 연 1회 주문 유도.</p>
+        <div class="rev-price">29,900 ~ 59,900원</div>
+      </div>
+      <div class="rev-card">
+        <h4>🏥 동물병원 B2B</h4>
+        <p>시한부 선고 시점 QR 안내지 배포 → 첫 달 무료 체험 → 전환. 병원당 월 3만원 + 전환 수수료 15%.</p>
+        <div class="rev-price">100개 병원 = 월 300만원</div>
+      </div>
+      <div class="rev-card">
+        <h4>🛡️ 펫 보험사 제휴</h4>
+        <p>보험사가 사별 고객에게 Petfuture 1년 이용권 제공. 보험 혜택 차별화 수단으로 B2B 라이선스 계약.</p>
+        <div class="rev-price">1곳 계약 = 연 3,000~5,000만원</div>
+      </div>
+      <div class="rev-card">
+        <h4>💌 헤리티지 일시불</h4>
+        <p>Family 2년치 + 3D 캐릭터 제작 + 포토북 1권. 장례업체 번들 상품으로 판매. 업체 마진 20% 제공.</p>
+        <div class="rev-price">99,000원 · 장례 번들</div>
+      </div>
+      <div class="rev-card">
+        <h4>🗺️ 맵 확장팩</h4>
+        <p>생전 자주 갔던 곳을 디지털로. 한강공원, 제주 바다, 북한산. 커스텀 "우리가 살던 옛날 집" 배경 제작.</p>
+        <div class="rev-price">1,900 ~ 9,900원</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 06 — 손익 ═══ -->
+<section id="pnl">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>손익 시뮬레이션 · 06</div>
+    <h2 class="sec-h">현실적인 숫자로 보는<br><em>수익 구조</em></h2>
+    <p class="sec-desc">1인 운영 기준 · 보수적 가정 · Base 시나리오</p>
+
+    <div class="unit-metrics">
+      <div class="metric-box">
+        <div class="metric-num">₩12,500</div>
+        <div class="metric-label">ARPU 월평균<br>Lite 55% / Family 45%</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">85%+</div>
+        <div class="metric-label">구독 마진<br>Gemini Flash-Lite 전환 효과</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">40+개월</div>
+        <div class="metric-label">예상 LTV 기간<br>이탈률 월 2% 기준</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">₩500K</div>
+        <div class="metric-label">LTV<br>ARPU × 40개월</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">71x</div>
+        <div class="metric-label">LTV / CAC<br>목표 CAC ₩7,000 기준</div>
+      </div>
+    </div>
+
+    <div class="pnl-table-wrap">
+      <table class="pnl-table">
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>1년차</th>
+            <th>2년차</th>
+            <th>3년차</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>월말 구독 유저</td><td>1,500명</td><td>4,500명</td><td>12,000명</td></tr>
+          <tr><td>ARPU</td><td>₩12,500</td><td>₩12,500</td><td>₩12,500</td></tr>
+          <tr><td>구독 매출 (연)</td><td>2.25억원</td><td>6.75억원</td><td>18억원</td></tr>
+          <tr><td>인앱 · 굿즈 매출</td><td>2,250만원</td><td>9,000만원</td><td>2.88억원</td></tr>
+          <tr><td>B2B + 보험사</td><td>1,500만원</td><td>9,000만원</td><td>2.7억원</td></tr>
+          <tr><td>포토북 · 헤리티지</td><td>1,125만원</td><td>4,500만원</td><td>1.44억원</td></tr>
+          <tr class="total"><td>총 매출</td><td>2.75억원</td><td>8.99억원</td><td>25억원</td></tr>
+          <tr class="subtotal"><td>Gemini API + 인프라</td><td>▼ 600만원</td><td>▼ 1,800만원</td><td>▼ 4,800만원</td></tr>
+          <tr class="subtotal"><td>마케팅</td><td>▼ 1,800만원</td><td>▼ 5,400만원</td><td>▼ 1.5억원</td></tr>
+          <tr class="subtotal"><td>운영비</td><td>▼ 600만원</td><td>▼ 900만원</td><td>▼ 1,800만원</td></tr>
+          <tr class="total"><td>영업이익 (추정)</td><td>2.29억원</td><td>7.65억원</td><td>19.5억원</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scenario-grid">
+      <div class="scenario-card">
+        <div class="scenario-icon">🐻</div>
+        <div class="scenario-name">Bear · 보수적</div>
+        <div class="scenario-rev">₩3,800만 / 1년</div>
+        <ul>
+          <li>유저 350명</li>
+          <li>B2B 제휴 3곳</li>
+          <li>흑자 전환 12개월</li>
+        </ul>
+      </div>
+      <div class="scenario-card" style="border-color: var(--border-hover);">
+        <div class="scenario-icon">📊</div>
+        <div class="scenario-name">Base · 기준</div>
+        <div class="scenario-rev" style="color: var(--accent-green);">₩6,744만 / 1년</div>
+        <ul>
+          <li>구독 600명</li>
+          <li>동물병원 15곳</li>
+          <li>흑자 전환 5~7개월</li>
+        </ul>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon">🐂</div>
+        <div class="scenario-name">Bull · 낙관적</div>
+        <div class="scenario-rev">₩1.8억 / 1년</div>
+        <ul>
+          <li>SNS 바이럴 1,800명</li>
+          <li>펫보험사 1곳 계약</li>
+          <li>흑자 전환 2~3개월</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 07 — 로드맵 ═══ -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>실행 로드맵 · 07</div>
+    <h2 class="sec-h">1인 창업자가 실행할 수 있는<br><em>단계별 플랜</em></h2>
+    <p class="sec-desc">Claude Code 기반 · 수익이 나오기 전까지 비용 제로 원칙</p>
+
+    <div class="roadmap-grid">
+      <div class="phase-card">
+        <div class="phase-tag">Phase 0 · M1~M2</div>
+        <h3>돈 쓰기 전에 검증한다</h3>
+        <ul>
+          <li>펫로스 경험자 10명 인터뷰</li>
+          <li>피그마 목업 → 카카오 카페 반응 테스트</li>
+          <li>Replicate API 캐릭터 품질 테스트</li>
+          <li>상표 선행 조사 · 도메인 확보</li>
+          <li>창업진흥원 1357 자격 확인</li>
+        </ul>
+        <div class="phase-kpi">→ 비용 약 15만원 이내</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-tag">Phase 1 · M3~M5</div>
+        <h3>감동 경험 하나만 완성한다</h3>
+        <ul>
+          <li>사진 업로드 → AI 2D 캐릭터 파이프라인</li>
+          <li>돌봄 액션 9종 + 함께한 날들 카운터</li>
+          <li>Supabase 인증 + Gemini API 반응</li>
+          <li>인스타 "사진으로 고양이 살려봄" 릴스</li>
+        </ul>
+        <div class="phase-kpi">→ MVP 데모 완성</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-tag">Phase 2 · M6~M8</div>
+        <h3>100명 유치 · 첫 수익 검증</h3>
+        <ul>
+          <li>카카오 카페 + 인스타 광고 월 30만원</li>
+          <li>동물병원 5곳 파일럿 시작</li>
+          <li>카카오페이 송금으로 전환율 실증</li>
+          <li>2주 스프린트 피드백 반영</li>
+        </ul>
+        <div class="phase-kpi">→ MRR 72만원 목표</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-tag">Phase 3 · M9~M18</div>
+        <h3>수익 구조 완성 · 500명 돌파</h3>
+        <ul>
+          <li>Family 플랜 + 인앱 아이템샵 오픈</li>
+          <li>동물병원 50곳 + 장례업체 5곳</li>
+          <li>AI 성격 반응 베타 출시</li>
+          <li>초기창업패키지 지원 활용</li>
+        </ul>
+        <div class="phase-kpi">→ 월 510만원 목표</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 08 — 일본 ═══ -->
+<section id="japan">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>일본 시장 · 08</div>
+    <h2 class="sec-h">한국 성공 모델이<br><em>가장 빠르게 통하는 시장</em></h2>
+
+    <div class="japan-header">
+      <div>
+        <p class="sec-desc" style="margin-bottom: 0;">
+          코드베이스 재사용 · 언어 현지화만으로 진입 가능. 반려동물 시장 1.6조엔으로 한국의 4배. M18+ 한국 구독 500명 달성 후 진입.
+        </p>
+      </div>
+      <div class="japan-reasons">
+        <div class="japan-reason"><strong>🐾 시장 규모</strong>1.6조엔 — 한국의 4배</div>
+        <div class="japan-reason"><strong>👤 1인가구</strong>38% — 한국보다 앞선 구조</div>
+        <div class="japan-reason"><strong>🌸 카와이 문화</strong>캐릭터화 최고 수용성</div>
+        <div class="japan-reason"><strong>🏮 오봉 문화</strong>추모 의식이 삶에 내재화</div>
+        <div class="japan-reason"><strong>📱 Twitter/X</strong>펫 커뮤니티 세계 최대</div>
+        <div class="japan-reason"><strong>🔍 경쟁사 전무</strong>블루오션 동일</div>
+      </div>
+    </div>
+
+    <div class="japan-strategy">
+      <div class="strat-item">
+        <h4>가격 전략</h4>
+        <p>Family ¥1,200/월 — 한국보다 약 20% 높게 책정. 프리미엄 포지셔닝. PAY-EASY + 콤비니 결제 필수.</p>
+      </div>
+      <div class="strat-item">
+        <h4>채널 전략</h4>
+        <p>Twitter/X 펫 인플루언서 1~2명 초기 협업. "한국에서 대박난 서비스 일본 상륙" 자연스러운 화제.</p>
+      </div>
+      <div class="strat-item">
+        <h4>현지화 카피</h4>
+        <p>ペットフューチャー / 未来へ、一緒に<br>"一緒にいた日々" 개념 일본 정서에 완벽 부합.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 09 — 기술 스택 ═══ -->
+<section id="tech">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span></span>기술 스택 · 09</div>
+    <h2 class="sec-h">Claude Code로 혼자 만드는<br><em>1인 개발 구성</em></h2>
+    <p class="sec-desc">초기 인프라 비용 월 0~10만원 · MVP 3개월 완성 목표. Gemini 2.5 Flash-Lite 활용으로 AI API 비용 최소화.</p>
+
+    <div class="stack-grid">
+      <div class="stack-group">
+        <h4>개발 도구</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Claude Code</span>
+          <span class="stack-tag">VS Code</span>
+          <span class="stack-tag">GitHub</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>프론트엔드</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Tailwind CSS</span>
+          <span class="stack-tag">Framer Motion</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>캐릭터 생성</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Replicate API</span>
+          <span class="stack-tag">Stable Diffusion</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>백엔드 · 인프라</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Supabase</span>
+          <span class="stack-tag">Vercel</span>
+          <span class="stack-tag">Cloudflare R2</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>AI 반응 (최소비용)</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Gemini 2.5 Flash-Lite</span>
+          <span class="stack-tag">Claude API</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>결제</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">포트원 (KR)</span>
+          <span class="stack-tag">Stripe (JP)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-item">
+        <h4>🔧 Claude Code로 개발 시간 70% 단축</h4>
+        <ul>
+          <li>전체 아키텍처 먼저 설계시키기</li>
+          <li>CRUD · 결제 · 인증 자동화</li>
+          <li>에러 메시지 그대로 붙여넣기</li>
+          <li>목표: 하루 2~3시간으로 3개월 MVP</li>
+        </ul>
+      </div>
+      <div class="principle-item">
+        <h4>📣 콘텐츠가 마케팅비를 대신한다</h4>
+        <ul>
+          <li>릴스: "사진으로 고양이 살려봄" 매주 1개</li>
+          <li>베타 유저 공유 시 1개월 무료 연장</li>
+          <li>카카오 반려동물 카페 정기 후기</li>
+          <li>목표: 광고비 월 30만원 이하로 100명</li>
+        </ul>
+      </div>
+      <div class="principle-item">
+        <h4>💰 수익 나오기 전 비용 제로</h4>
+        <ul>
+          <li>Vercel + Supabase 무료 플랜으로 시작</li>
+          <li>Replicate: 사용량 기반 과금</li>
+          <li>Gemini Flash-Lite: 월 몇백원 수준</li>
+          <li>초기 총 투자: 도메인 + 상표 = 50만원</li>
+        </ul>
+      </div>
+      <div class="principle-item">
+        <h4>🛡️ 윤리 · 법무 선제 관리</h4>
+        <ul>
+          <li>"건강한 애도" — "디지털 불멸"과 명확히 선 긋기</li>
+          <li>펫로스 전공 상담사 1명 자문 위원</li>
+          <li>개인정보 처리방침 법무 검토</li>
+          <li>서비스 종료 시 데이터 다운로드 보장</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 클로징 ═══ -->
+<section id="closing">
+  <div class="wrap">
+    <h2 class="closing-h">서서히,<br>자연스럽게 — <em>잊혀지게</em></h2>
+    <p class="closing-sub">새로운 반려동물이 그 자리를 채울 때까지 — 그게 Petfuture의 전부다</p>
+
+    <div class="closing-metrics">
+      <div class="cm-item">
+        <span class="cm-num">MRR 510만</span>
+        <span class="cm-label">M18 목표</span>
+      </div>
+      <div class="cm-item">
+        <span class="cm-num">구독 500명</span>
+        <span class="cm-label">손익분기점</span>
+      </div>
+      <div class="cm-item">
+        <span class="cm-num">월 2%</span>
+        <span class="cm-label">목표 이탈률</span>
+      </div>
+      <div class="cm-item">
+        <span class="cm-num">41x</span>
+        <span class="cm-label">LTV / CAC</span>
+      </div>
+      <div class="cm-item">
+        <span class="cm-num">KR → JP</span>
+        <span class="cm-label">M18+ 확장</span>
+      </div>
+    </div>
+
+    <p class="closing-note">
+      Petfuture Ultimate Business Model · Care System Applied Edition<br>
+      1인 창업 최적화 · 구독 SaaS · 한국 선점 → 일본 확장<br>
+      시뮬레이션 수치는 추정치입니다. 실제 성과는 시장 반응에 따라 달라질 수 있습니다.
+    </p>
+  </div>
+</section>
+
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Pet<em>future</em></div>
+    <div class="footer-meta">Ultimate Business Model · 2026 · 1인 창업 최적화 설계</div>
+  </div>
+</footer>
+
+</body>
+</html>
